@@ -6,9 +6,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.io.*;
 
-/**
- * Created by pari on 10/16/2016.
- */
 public class FinalXMLParser {
     static BodyFix fix = new BodyFix();
 
