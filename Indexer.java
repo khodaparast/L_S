@@ -4,6 +4,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.NumericField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.SimpleFSDirectory;
@@ -14,22 +15,16 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static luceneProject.LuceneConstants.Q_A_INDEX_DIRECTORY;
+import static luceneProject.LuceneConstants.SAMPLE_INDEX_DIRECTORY;
+
 /**
  * Created by "P.Khodaparast" on 10/18/2016.
  */
 public class Indexer {
     public Indexer() throws IOException {
     }
-
-    //IndexDirectory  is where index  going to be build
-    public static final File BODY_INDEX_DIRECTORY = new File("IndexQuestionBodyDir");
-    public static final File SAMPLE_INDEX_DIRECTORY = new File("samplePostsDir");
-    public static final File QUESTION_INDEX_DIRECTORY = new File("Q_Dir");
-    public static final File Q_A_INDEX_DIRECTORY = new File("Q_ADir");
-    public static final File A_INDEX_DIRECTORY = new File("A_Dir");
-
-    //Lucene Section
-    public Directory directory = new SimpleFSDirectory(Q_A_INDEX_DIRECTORY);
+    public Directory directory = new SimpleFSDirectory(SAMPLE_INDEX_DIRECTORY);
     public Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_30);
     public IndexWriter iWriter = new IndexWriter(directory, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
 
@@ -38,7 +33,6 @@ public class Indexer {
     public void createIndex(String fileNameToBeIndex) throws IOException {
 
         System.out.println("Indexing.......");
-        //fileNameTOBeIndex is something like this "body.txt" the file name and path that going to be indexed
         BufferedReader br = new BufferedReader(new FileReader(fileNameToBeIndex));
         String sCurrentLine = br.readLine();
 
@@ -50,11 +44,12 @@ public class Indexer {
             String[] newLine = sCurrentLine.split(",");
 
             String id = newLine[0];
-            String creationdate = newLine[1];
+            String creationdate = DateFix.fixSearchedDateResult(newLine[1]);
+            System.out.println("creation Date : "+creationdate);
             String tags = newLine[2];
             String body = newLine[3];
             doc.add(new Field("Id", id, Field.Store.YES, Field.Index.ANALYZED));
-            doc.add(new Field("CreationDate", creationdate, Field.Store.YES, Field.Index.NOT_ANALYZED));//<<------
+            doc.add(new Field("CreationDate", creationdate, Field.Store.YES, Field.Index.NOT_ANALYZED));
 
             doc.add(new Field("Tags", tags, Field.Store.YES, Field.Index.ANALYZED));
             doc.add(new Field("Body", body, Field.Store.YES, Field.Index.ANALYZED));
@@ -76,7 +71,6 @@ public class Indexer {
 
     public void createIndexAnswer(String fileNameToBeIndex) throws IOException {
         System.out.println("Indexing.......");
-        //fileNameTOBeIndex is something like this "body.txt" the file name and path that going to be indexed
         BufferedReader br = new BufferedReader(new FileReader(fileNameToBeIndex));
         String sCurrentLine = br.readLine();
 
@@ -141,3 +135,4 @@ public class Indexer {
 
     }
 }
+
