@@ -15,22 +15,22 @@ public class Tester {
     public static void main(String[] args) throws IOException, ParseException {
         Tester test = new Tester();
 
-//        test.searchQuestionBodyByTerm("android java UX");                            // <----original   done!
-//        test.searchQuestionBodyByQueryDateRange("android java",2008,12,1,2015,10,3);     // <----original   done!
-//        test.searchQuestionBodyByQueryDateRange("java csv", 2008, 8, 1, 2008, 8, 3);
+//        test.searchQuestionBodyByTerm("conver int string java");
+//        test.searchQuestionBodyByQueryDateRange("android java",2008,12,1,2015,10,3);
+
 //        ArrayList<String> al = new ArrayList<>();
-//        al.add("IOS");
+//        al.add("java");
 //        al.add("Windows");
-//        test.searchQuestionByTag("android java",al);
-//        test.searchAnswerBodyByQuestionTermAndAcceptedFlag("android java",true);           // <----original   done!
-//        test.searchAnswerBodyByQuestionTermAndAcceptedFlag("java",true);           // <----original   done!
-        test.getBestAnswer("898405");                      // <----original   done!
+//        test.searchQuestionByTag("convert int string",al);
+
+//        test.searchAnswerBodyByQuestionTermAndAcceptedFlag("c java",true);           // <----original   done!
+        test.getBestAnswer("4105331");
     }
 
     // ------------------------------------------------1. --------------------------------------------------------------
     public ArrayList<String> searchQuestionBodyByTerm(String input) throws IOException, ParseException {
 
-        searcher.searchQuestionBodyByTerm2(input);
+        searcher.searchQuestionBodyByTerm(input);
         return null;
     }
 
@@ -38,6 +38,7 @@ public class Tester {
     public ArrayList<String> searchQuestionBodyByQueryDateRange(String query, int startYear, int startMonth, int startDay,
                                                                 int endYear, int endMonth, int endDay) throws IOException, ParseException {
 
+        System.out.println("query in tester: "+query);
         searcher.searchQuestionBodyByQueryDateRange(query, startYear, startMonth, startDay, endYear, endMonth, endDay);
 
         //This function should return all question ids with given query in their bodies which asked
