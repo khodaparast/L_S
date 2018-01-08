@@ -1,5 +1,7 @@
 # Lucene_Stackoverflow
-Master IR Project On Stack-overflow Dataset
+Master IR (Information Retrieval) Project On Stack-overflow Dataset Indexing by Lucene
+
+stackoverflow dataset  size is more than 30GB. 
 
 step 1. parse Posts.xml file by FinalXMLParser (I have put a sample of Posts) it gives a txt file as output.
 
